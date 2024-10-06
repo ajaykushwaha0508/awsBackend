@@ -1,0 +1,28 @@
+name : Deploy Node Application 
+
+on : 
+    push: 
+       branches: 
+                 - main
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+            - name: Checkout Source 
+              uses: action/checout@v4
+            - name: Login to docker hub
+              uses: docker login -u ajaykushwaha05 -p ajay@182460328
+            - name: Build Docker Image 
+              run: docker build -t ajaykushwaha05/aws-react .
+            - name: Publish Image to docker hub
+              run:  docker push ajaykushwaha05/aws-react:latest
+    
+    deploy: 
+      needs: build
+      runs-on: self-hosted 
+      steps: 
+        - name: Pull image from docker hub
+          run: docker pull ajaykushwaha05/aws-react:latest
+        - name: Run Docker Container
+          run: docker run -d -p 3000:3000 --name nodejs-app-container
