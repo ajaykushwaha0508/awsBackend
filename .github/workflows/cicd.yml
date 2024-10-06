@@ -1,16 +1,16 @@
-name : Deploy Node Application 
+name: Deploy Node Application 
 
-on : 
-    push: 
-       branches: 
-                 - main
+on: 
+  push: 
+    branches: 
+      - main
 
 jobs:
     build:
       runs-on: ubuntu-latest
       steps:
             - name: Checkout Source 
-              uses: action/checout@v4
+              uses: action/checkout@v4
             - name: Login to docker hub
               uses: docker login -u ajaykushwaha05 -p ajay@182460328
             - name: Build Docker Image 
